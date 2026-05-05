@@ -1,11 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-const C = {
-  bg: "#04080f", bg2: "#080d18",
-  blue: "#00C2FF", blueL: "#5BE0FF", white: "#e8edf5",
-  pink: "#FF6EC7",
-};
-
 const USERS = {
   simon:   { pass:"sm2026", color:"#00C2FF", colorBg:"rgba(0,194,255,0.12)", colorBorder:"rgba(0,194,255,0.35)", initial:"S", label:"Simón" },
   mariana: { pass:"sm2026", color:"#FF6EC7", colorBg:"rgba(255,110,199,0.12)", colorBorder:"rgba(255,110,199,0.35)", initial:"M", label:"Mariana" },
@@ -86,11 +80,11 @@ const PHASES = [
       {name:"Alibaba — packaging",tipo:"Packaging personalizado",contacto:"alibaba.com — 'custom dropper bottle'",nota:"Frascos personalizados con molde desde 500 uds. Molde $1.5M-4M COP."},
     ],
     ia:[
-      {name:"Midjourney",uso:"Conceptos visuales y moodboards de marca",link:"midjourney.com",nivel:"El mejor para identidad visual premium"},
+      {name:"Midjourney",uso:"Conceptos visuales y moodboards de marca",link:"midjourney.com",nivel:"⭐ El mejor para identidad visual premium"},
       {name:"Adobe Firefly",uso:"Assets visuales integrados con Adobe",link:"firefly.adobe.com",nivel:"Ideal si usan Adobe"},
       {name:"Looka",uso:"Generador de logos con IA — rápido",link:"looka.com",nivel:"Para explorar direcciones de logo"},
-      {name:"Krea AI",uso:"Renders de producto y packaging",link:"krea.ai",nivel:"Visualizar empaque antes de producir"},
-      {name:"Canva Magic Studio",uso:"Diseño de packaging y materiales",link:"canva.com",nivel:"Fácil de usar"},
+      {name:"Krea AI",uso:"Renders de producto y packaging",link:"krea.ai",nivel:"⭐ Visualizar empaque antes de producir"},
+      {name:"Canva Magic Studio",uso:"Diseño de packaging y materiales",link:"canva.com",nivel:"Fácil de usar, buena opción inicial"},
       {name:"Galileo AI",uso:"Interfaces y experiencias digitales de marca",link:"usegalileo.ai",nivel:"Para app o web de la marca"},
     ],
     grupos:[
@@ -183,16 +177,83 @@ function Pill({children,onClick,primary,small,disabled,color}){
   const[h,setH]=useState(false);
   const col=color||"#00C2FF";
   const rgb=color==="#FF6EC7"?"255,110,199":"0,194,255";
-  return <button onClick={onClick} disabled={disabled} onMouseEnter={()=>!disabled&&setH(true)} onMouseLeave={()=>setH(false)} style={{padding:small?"4px 12px":"10px 22px",background:primary?(disabled?"rgba(0,194,255,0.07)":h?`rgba(${rgb},0.92)`:`rgba(${rgb},0.85)`):(h?`rgba(${rgb},0.07)`:"transparent"),color:primary?(disabled?"rgba(0,194,255,0.3)":"#04080f"):(disabled?"rgba(100,140,180,0.3)":col),border:primary?"none":`1px solid ${disabled?`rgba(${rgb},0.1)`:h?`rgba(${rgb},0.45)`:`rgba(${rgb},0.22)`}`,borderRadius:999,fontSize:small?10:12,fontWeight:primary?700:400,cursor:disabled?"not-allowed":"pointer",letterSpacing:".04em",fontFamily:"inherit",transition:"all .15s",whiteSpace:"nowrap",outline:"none"}}>{children}</button>;
+  return <button onClick={onClick} disabled={disabled} onMouseEnter={()=>!disabled&&setH(true)} onMouseLeave={()=>setH(false)} style={{padding:small?"5px 14px":"11px 24px",background:primary?(disabled?"rgba(0,194,255,0.07)":h?`rgba(${rgb},0.92)`:`rgba(${rgb},0.85)`):(h?`rgba(${rgb},0.07)`:"transparent"),color:primary?(disabled?"rgba(0,194,255,0.3)":"#04080f"):(disabled?"rgba(100,140,180,0.3)":col),border:primary?"none":`1px solid ${disabled?`rgba(${rgb},0.1)`:h?`rgba(${rgb},0.45)`:`rgba(${rgb},0.22)`}`,borderRadius:999,fontSize:small?11:13,fontWeight:primary?700:500,cursor:disabled?"not-allowed":"pointer",letterSpacing:".04em",fontFamily:"inherit",transition:"all .15s",whiteSpace:"nowrap",outline:"none"}}>{children}</button>;
 }
 
-function Av({user,size=26}){
+function Av({user,size=28}){
   const u=USERS[user];
   return <div style={{width:size,height:size,borderRadius:"50%",background:u.colorBg,border:`1px solid ${u.colorBorder}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:size*.38,fontWeight:700,color:u.color,flexShrink:0}}>{u.initial}</div>;
 }
 
-function Bg(){
-  return <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:0}} viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="ga" cx="15%" cy="35%" r="50%"><stop offset="0%" stopColor="#00C2FF" stopOpacity="0.06"/><stop offset="100%" stopColor="#04080f" stopOpacity="0"/></radialGradient><radialGradient id="gb" cx="85%" cy="75%" r="45%"><stop offset="0%" stopColor="#FF6EC7" stopOpacity="0.05"/><stop offset="100%" stopColor="#04080f" stopOpacity="0"/></radialGradient></defs><rect width="800" height="500" fill="url(#ga)"/><rect width="800" height="500" fill="url(#gb)"/></svg>;
+// Animated SVG background with blue particles
+function AnimatedBg({full=false}){
+  return(
+    <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:0}} viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <radialGradient id="rg1" cx="20%" cy="30%" r="55%"><stop offset="0%" stopColor="#00C2FF" stopOpacity="0.12"/><stop offset="100%" stopColor="#04080f" stopOpacity="0"/></radialGradient>
+        <radialGradient id="rg2" cx="80%" cy="70%" r="50%"><stop offset="0%" stopColor="#00C2FF" stopOpacity="0.07"/><stop offset="100%" stopColor="#04080f" stopOpacity="0"/></radialGradient>
+        <radialGradient id="rg3" cx="50%" cy="50%" r="40%"><stop offset="0%" stopColor="#0050aa" stopOpacity="0.06"/><stop offset="100%" stopColor="#04080f" stopOpacity="0"/></radialGradient>
+      </defs>
+      <rect width="1200" height="800" fill="url(#rg1)"/>
+      <rect width="1200" height="800" fill="url(#rg2)"/>
+      <rect width="1200" height="800" fill="url(#rg3)"/>
+      {full&&<>
+        <circle cx="200" cy="150" r="1.5" fill="#00C2FF" opacity="0.5"><animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="400" cy="80" r="1" fill="#00C2FF" opacity="0.4"><animate attributeName="opacity" values="0.1;0.7;0.1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="700" cy="200" r="2" fill="#00C2FF" opacity="0.3"><animate attributeName="opacity" values="0.3;0.9;0.3" dur="2.5s" repeatCount="indefinite"/></circle>
+        <circle cx="900" cy="120" r="1.5" fill="#5BE0FF" opacity="0.4"><animate attributeName="opacity" values="0.2;0.6;0.2" dur="3.5s" repeatCount="indefinite"/></circle>
+        <circle cx="1100" cy="300" r="1" fill="#00C2FF" opacity="0.3"><animate attributeName="opacity" values="0.1;0.5;0.1" dur="5s" repeatCount="indefinite"/></circle>
+        <circle cx="150" cy="400" r="1.5" fill="#5BE0FF" opacity="0.3"><animate attributeName="opacity" values="0.2;0.7;0.2" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="600" cy="500" r="1" fill="#00C2FF" opacity="0.4"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="1000" cy="600" r="2" fill="#00C2FF" opacity="0.2"><animate attributeName="opacity" values="0.1;0.6;0.1" dur="4.5s" repeatCount="indefinite"/></circle>
+        <line x1="200" y1="150" x2="400" y2="80" stroke="#00C2FF" strokeWidth="0.3" opacity="0.15"/>
+        <line x1="400" y1="80" x2="700" y2="200" stroke="#00C2FF" strokeWidth="0.3" opacity="0.1"/>
+        <line x1="700" y1="200" x2="900" y2="120" stroke="#00C2FF" strokeWidth="0.3" opacity="0.12"/>
+        <line x1="900" y1="120" x2="1100" y2="300" stroke="#00C2FF" strokeWidth="0.3" opacity="0.1"/>
+      </>}
+    </svg>
+  );
+}
+
+// Radial progress chart
+function RadialChart({pct, color, size=80, label, value}){
+  const r=32, c=2*Math.PI*r;
+  const dash=c*(pct/100);
+  return(
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:6}}>
+      <div style={{position:"relative",width:size,height:size}}>
+        <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(0,194,255,0.08)" strokeWidth="6"/>
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth="6"
+            strokeDasharray={`${dash} ${c}`} strokeLinecap="round"
+            style={{transition:"stroke-dasharray 0.8s ease"}}/>
+        </svg>
+        <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+          <div style={{fontSize:15,fontWeight:800,color,lineHeight:1}}>{value}</div>
+        </div>
+      </div>
+      <div style={{fontSize:10,color:"rgba(100,150,200,0.5)",textAlign:"center",maxWidth:70}}>{label}</div>
+    </div>
+  );
+}
+
+// Bar chart for phases
+function PhaseBar({label,pct,color="#00C2FF",simonN,marianaN}){
+  return(
+    <div style={{marginBottom:10}}>
+      <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
+        <span style={{fontSize:11,color:"rgba(200,220,240,0.7)"}}>{label}</span>
+        <span style={{fontSize:11,fontWeight:700,color:pct===100?"#00e88a":color}}>{pct}%</span>
+      </div>
+      <div style={{height:6,background:"rgba(0,194,255,0.06)",borderRadius:3,overflow:"hidden",marginBottom:3}}>
+        <div style={{width:`${pct}%`,height:"100%",background:pct===100?"#00e88a":`linear-gradient(90deg,${color},#5BE0FF)`,borderRadius:3,transition:"width 0.8s ease"}}/>
+      </div>
+      <div style={{display:"flex",gap:10}}>
+        {simonN>0&&<span style={{fontSize:9,color:"rgba(0,194,255,0.5)"}}>● Simón: {simonN}</span>}
+        {marianaN>0&&<span style={{fontSize:9,color:"rgba(255,110,199,0.5)"}}>● Mariana: {marianaN}</span>}
+      </div>
+    </div>
+  );
 }
 
 export default function App(){
@@ -200,7 +261,7 @@ export default function App(){
   const[loginUser,setLoginUser]=useState("simon");
   const[loginPass,setLoginPass]=useState("");
   const[loginErr,setLoginErr]=useState("");
-  const[view,setView]=useState("dashboard");
+  const[view,setView]=useState("home");
   const[activePhase,setActivePhase]=useState(null);
   const[activeTab,setActiveTab]=useState("tareas");
   const[checks,setChecks]=useState({});
@@ -225,10 +286,10 @@ export default function App(){
   }
   async function save(nc,nn,nd,nm){
     const p={checks:nc??checks,notes:nn??notes,decisions:nd??decisions,chatMsgs:nm??chatMsgs};
-    try{await window.storage.set("sm2026-v3",JSON.stringify(p),true);setSaveInd("Guardado · Simón y Mariana");setTimeout(()=>setSaveInd(""),2200);}catch(e){}
+    try{await window.storage.set("sm2026-v3",JSON.stringify(p),true);setSaveInd("Guardado ·");setTimeout(()=>setSaveInd(""),2200);}catch(e){}
   }
 
-  function login(){const u=USERS[loginUser];if(u?.pass===loginPass){setAuth(loginUser);setLoginErr("");}else setLoginErr("Contraseña incorrecta");}
+  function login(){const u=USERS[loginUser];if(u?.pass===loginPass){setAuth(loginUser);setLoginErr("");setView("home");}else setLoginErr("Contraseña incorrecta");}
   function toggleCheck(id){const nc={...checks};nc[id]===auth?delete nc[id]:nc[id]=auth;setChecks(nc);save(nc,null,null,null);}
   function openNote(id,title){setEditNote({id,title});setNoteText(notes[id]||"");}
   function saveNote(){const nn={...notes,[editNote.id]:noteText};setNotes(nn);setEditNote(null);save(null,nn,null,null);}
@@ -257,29 +318,29 @@ export default function App(){
   const marianaDone=Object.values(checks).filter(v=>v==="mariana").length;
   const globalPct=Math.round((doneTasks/totalTasks)*100);
   const AU=USERS[auth||"simon"];
-  const inp={width:"100%",boxSizing:"border-box",background:"rgba(0,194,255,0.03)",border:"1px solid rgba(0,194,255,0.14)",color:"#e8edf5",borderRadius:8,padding:"10px 14px",fontSize:13,fontFamily:"inherit",outline:"none"};
+  const inp={width:"100%",boxSizing:"border-box",background:"rgba(0,194,255,0.03)",border:"1px solid rgba(0,194,255,0.14)",color:"#e8edf5",borderRadius:8,padding:"11px 15px",fontSize:14,fontFamily:"inherit",outline:"none"};
 
   if(!auth) return(
     <div style={{background:"#04080f",height:"100vh",width:"100vw",fontFamily:"'Helvetica Neue',Arial,sans-serif",color:"#e8edf5",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",position:"relative"}}>
-      <Bg/>
-      <div style={{position:"relative",zIndex:1,width:350}}>
-        <GlowCard hover={false} style={{padding:"38px 32px",borderColor:"rgba(0,194,255,0.22)"}}>
-          <div style={{textAlign:"center",marginBottom:26}}>
-            <div style={{fontSize:11,color:"#00C2FF",letterSpacing:".15em",textTransform:"uppercase",marginBottom:10}}>Proyecto S&M 2026</div>
-            <div style={{fontSize:22,fontWeight:800,letterSpacing:"-.03em",lineHeight:1.2}}>Bienvenido al<br/><span style={{color:"#00C2FF"}}>OS del negocio</span></div>
-            <div style={{fontSize:11,color:"rgba(100,150,200,0.35)",marginTop:6}}>Water Drops · Medellín</div>
+      <AnimatedBg full/>
+      <div style={{position:"relative",zIndex:1,width:380}}>
+        <GlowCard hover={false} style={{padding:"44px 36px",borderColor:"rgba(0,194,255,0.25)"}}>
+          <div style={{textAlign:"center",marginBottom:30}}>
+            <div style={{fontSize:12,color:"#00C2FF",letterSpacing:".15em",textTransform:"uppercase",marginBottom:12}}>Proyecto S&M 2026</div>
+            <div style={{fontSize:26,fontWeight:800,letterSpacing:"-.03em",lineHeight:1.2}}>Bienvenido al<br/><span style={{color:"#00C2FF"}}>OS del negocio</span></div>
+            <div style={{fontSize:12,color:"rgba(100,150,200,0.35)",marginTop:8}}>Water Drops · Medellín</div>
           </div>
-          <div style={{marginBottom:11}}>
-            <div style={{fontSize:10,color:"rgba(100,150,200,0.45)",marginBottom:5}}>¿Quién eres?</div>
+          <div style={{marginBottom:14}}>
+            <div style={{fontSize:11,color:"rgba(100,150,200,0.45)",marginBottom:6}}>¿Quién eres?</div>
             <select value={loginUser} onChange={e=>setLoginUser(e.target.value)} style={{...inp}}>
               <option value="simon">Simón</option>
               <option value="mariana">Mariana</option>
             </select>
           </div>
-          <div style={{marginBottom:18}}>
-            <div style={{fontSize:10,color:"rgba(100,150,200,0.45)",marginBottom:5}}>Contraseña del equipo</div>
+          <div style={{marginBottom:22}}>
+            <div style={{fontSize:11,color:"rgba(100,150,200,0.45)",marginBottom:6}}>Contraseña del equipo</div>
             <input type="password" value={loginPass} onChange={e=>setLoginPass(e.target.value)} onKeyDown={e=>e.key==="Enter"&&login()} placeholder="••••••••" style={inp}/>
-            {loginErr&&<div style={{fontSize:11,color:"#ff6b6b",marginTop:5}}>{loginErr}</div>}
+            {loginErr&&<div style={{fontSize:12,color:"#ff6b6b",marginTop:6}}>{loginErr}</div>}
           </div>
           <Pill primary onClick={login}>Entrar →</Pill>
         </GlowCard>
@@ -291,31 +352,31 @@ export default function App(){
     <div style={{background:"#04080f",height:"100vh",width:"100vw",fontFamily:"'Helvetica Neue',Arial,sans-serif",color:"#e8edf5",display:"flex",overflow:"hidden"}}>
 
       {/* SIDEBAR */}
-      <div style={{width:214,minWidth:214,height:"100vh",background:"rgba(4,8,15,0.98)",borderRight:"1px solid rgba(0,194,255,0.07)",display:"flex",flexDirection:"column",flexShrink:0,overflowY:"auto"}}>
-        <div style={{padding:"15px 17px 11px",borderBottom:"1px solid rgba(0,194,255,0.07)",cursor:"pointer",flexShrink:0}} onClick={()=>setView("dashboard")}>
-          <div style={{fontSize:13,fontWeight:800,lineHeight:1.25}}>Proyecto<br/><span style={{color:"#00C2FF"}}>S&M 2026</span></div>
-          <div style={{fontSize:9,color:"rgba(0,194,255,0.28)",letterSpacing:".1em",marginTop:3,textTransform:"uppercase"}}>Water Drops · Medellín</div>
+      <div style={{width:230,minWidth:230,height:"100vh",background:"rgba(4,8,15,0.98)",borderRight:"1px solid rgba(0,194,255,0.07)",display:"flex",flexDirection:"column",flexShrink:0,overflowY:"auto"}}>
+        <div style={{padding:"18px 20px 14px",borderBottom:"1px solid rgba(0,194,255,0.07)",cursor:"pointer",flexShrink:0}} onClick={()=>setView("home")}>
+          <div style={{fontSize:15,fontWeight:800,lineHeight:1.25}}>Proyecto<br/><span style={{color:"#00C2FF"}}>S&M 2026</span></div>
+          <div style={{fontSize:10,color:"rgba(0,194,255,0.28)",letterSpacing:".1em",marginTop:4,textTransform:"uppercase"}}>Water Drops · Medellín</div>
         </div>
-        {[{id:"dashboard",label:"Dashboard"},{id:"bitacora",label:"Bitácora"},{id:"chat",label:"Asesor IA"}].map(item=>(
-          <div key={item.id} onClick={()=>setView(item.id)} style={{padding:"8px 17px",cursor:"pointer",borderLeft:view===item.id?"2px solid #00C2FF":"2px solid transparent",background:view===item.id?"rgba(0,194,255,0.05)":"transparent",transition:"all .13s",display:"flex",alignItems:"center",gap:7,marginTop:item.id==="dashboard"?8:0,flexShrink:0}}
+        {[{id:"home",label:"Inicio"},{id:"dashboard",label:"Dashboard"},{id:"bitacora",label:"Bitácora"},{id:"chat",label:"Asesor IA"}].map(item=>(
+          <div key={item.id} onClick={()=>setView(item.id)} style={{padding:"10px 20px",cursor:"pointer",borderLeft:view===item.id?"2px solid #00C2FF":"2px solid transparent",background:view===item.id?"rgba(0,194,255,0.05)":"transparent",transition:"all .13s",display:"flex",alignItems:"center",gap:8,marginTop:item.id==="home"?10:0,flexShrink:0}}
             onMouseEnter={e=>{if(view!==item.id)e.currentTarget.style.background="rgba(0,194,255,0.025)";}} onMouseLeave={e=>{if(view!==item.id)e.currentTarget.style.background="transparent";}}>
-            {item.id==="chat"&&<div style={{width:5,height:5,borderRadius:"50%",background:"#00C2FF",flexShrink:0}}/>}
-            <span style={{fontSize:12,color:view===item.id?"#e8edf5":"rgba(100,140,180,0.55)"}}>{item.label}</span>
+            {item.id==="chat"&&<div style={{width:6,height:6,borderRadius:"50%",background:"#00C2FF",flexShrink:0}}/>}
+            <span style={{fontSize:13,color:view===item.id?"#e8edf5":"rgba(100,140,180,0.55)"}}>{item.label}</span>
           </div>
         ))}
-        <div style={{padding:"6px 0 4px",borderTop:"1px solid rgba(0,194,255,0.06)",marginTop:6,flexShrink:0}}>
-          <div style={{fontSize:9,color:"rgba(0,194,255,0.2)",letterSpacing:".1em",textTransform:"uppercase",padding:"5px 17px 3px"}}>Fases</div>
+        <div style={{padding:"8px 0 4px",borderTop:"1px solid rgba(0,194,255,0.06)",marginTop:8,flexShrink:0}}>
+          <div style={{fontSize:10,color:"rgba(0,194,255,0.2)",letterSpacing:".1em",textTransform:"uppercase",padding:"6px 20px 4px"}}>Fases</div>
           {PHASES.map(ph=>{
             const pd=ph.grupos.reduce((a,g)=>a+g.tareas.filter(t=>checks[t.id]).length,0);
             const pt=ph.grupos.reduce((a,g)=>a+g.tareas.length,0);
             const pct=Math.round((pd/pt)*100);
             const act=activePhase?.id===ph.id&&view==="phase";
             return(
-              <div key={ph.id} onClick={()=>{setActivePhase(ph);setView("phase");setActiveTab("tareas");}} style={{padding:"5px 17px",cursor:"pointer",borderLeft:act?"2px solid #00C2FF":"2px solid transparent",background:act?"rgba(0,194,255,0.05)":"transparent",transition:"all .13s"}}
+              <div key={ph.id} onClick={()=>{setActivePhase(ph);setView("phase");setActiveTab("tareas");}} style={{padding:"6px 20px",cursor:"pointer",borderLeft:act?"2px solid #00C2FF":"2px solid transparent",background:act?"rgba(0,194,255,0.05)":"transparent",transition:"all .13s"}}
                 onMouseEnter={e=>{if(!act)e.currentTarget.style.background="rgba(0,194,255,0.02)";}} onMouseLeave={e=>{if(!act)e.currentTarget.style.background="transparent";}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                  <span style={{fontSize:11,color:act?"#e8edf5":"rgba(100,140,180,0.5)"}}>{ph.num} · {ph.label}</span>
-                  <span style={{fontSize:9,color:pct===100?"#00e88a":"rgba(0,194,255,0.26)"}}>{pct}%</span>
+                  <span style={{fontSize:12,color:act?"#e8edf5":"rgba(100,140,180,0.5)"}}>{ph.num} · {ph.label}</span>
+                  <span style={{fontSize:10,color:pct===100?"#00e88a":"rgba(0,194,255,0.26)"}}>{pct}%</span>
                 </div>
                 <div style={{height:2,background:"rgba(0,194,255,0.05)",borderRadius:1,marginTop:3,overflow:"hidden"}}>
                   <div style={{width:`${pct}%`,height:"100%",background:pct===100?"#00e88a":"rgba(0,194,255,0.42)",borderRadius:1,transition:"width .4s"}}/>
@@ -324,68 +385,96 @@ export default function App(){
             );
           })}
         </div>
-        <div style={{marginTop:"auto",padding:"11px 17px",borderTop:"1px solid rgba(0,194,255,0.06)",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
-          <div style={{display:"flex",alignItems:"center",gap:7}}>
-            <Av user={auth} size={26}/>
-            <div><div style={{fontSize:11,color:"#e8edf5",fontWeight:600}}>{AU.label}</div><div style={{fontSize:9,color:AU.color}}>· Activo</div></div>
+        <div style={{marginTop:"auto",padding:"13px 20px",borderTop:"1px solid rgba(0,194,255,0.06)",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
+          <div style={{display:"flex",alignItems:"center",gap:8}}>
+            <Av user={auth} size={28}/>
+            <div><div style={{fontSize:12,color:"#e8edf5",fontWeight:600}}>{AU.label}</div><div style={{fontSize:10,color:AU.color}}>· Activo</div></div>
           </div>
-          <div onClick={()=>setAuth(null)} style={{fontSize:9,color:"rgba(100,140,180,0.3)",cursor:"pointer",padding:"2px 6px",border:"1px solid rgba(0,194,255,0.07)",borderRadius:4}}
+          <div onClick={()=>setAuth(null)} style={{fontSize:10,color:"rgba(100,140,180,0.3)",cursor:"pointer",padding:"2px 7px",border:"1px solid rgba(0,194,255,0.07)",borderRadius:4}}
             onMouseEnter={e=>e.currentTarget.style.color="rgba(255,100,100,0.55)"} onMouseLeave={e=>e.currentTarget.style.color="rgba(100,140,180,0.3)"}>salir</div>
         </div>
       </div>
 
       {/* MAIN */}
       <div style={{flex:1,display:"flex",flexDirection:"column",minWidth:0,overflow:"hidden"}}>
-        <div style={{height:50,minHeight:50,borderBottom:"1px solid rgba(0,194,255,0.07)",padding:"0 28px",display:"flex",alignItems:"center",justifyContent:"space-between",background:"rgba(4,8,15,0.96)",flexShrink:0}}>
-          <div style={{fontSize:13,fontWeight:700,color:"#e8edf5"}}>
+        <div style={{height:52,minHeight:52,borderBottom:"1px solid rgba(0,194,255,0.07)",padding:"0 32px",display:"flex",alignItems:"center",justifyContent:"space-between",background:"rgba(4,8,15,0.96)",flexShrink:0}}>
+          <div style={{fontSize:14,fontWeight:700,color:"#e8edf5"}}>
+            {view==="home"&&"Inicio"}
             {view==="dashboard"&&"Dashboard"}
             {view==="phase"&&activePhase&&`Fase ${activePhase.num} — ${activePhase.label}`}
             {view==="bitacora"&&"Bitácora de decisiones"}
             {view==="chat"&&"Asesor IA"}
           </div>
-          <div style={{display:"flex",alignItems:"center",gap:14}}>
-            {saveInd&&<span style={{fontSize:10,color:"rgba(0,194,255,0.4)"}}>{saveInd}</span>}
-            <span style={{fontSize:11,color:"rgba(100,150,200,0.3)"}}>{doneTasks}/{totalTasks} · {globalPct}%</span>
+          <div style={{display:"flex",alignItems:"center",gap:16}}>
+            {saveInd&&<span style={{fontSize:11,color:"rgba(0,194,255,0.4)"}}>{saveInd}</span>}
+            <span style={{fontSize:12,color:"rgba(100,150,200,0.3)"}}>{doneTasks}/{totalTasks} · {globalPct}%</span>
           </div>
         </div>
 
         <div style={{flex:1,overflowY:"auto",overflowX:"hidden"}}>
 
+          {/* HOME */}
+          {view==="home"&&(
+            <div style={{position:"relative",height:"100%",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+              <AnimatedBg full/>
+              <div style={{position:"relative",zIndex:1,textAlign:"center",padding:"40px 32px",maxWidth:700}}>
+                <div style={{fontSize:13,color:"rgba(0,194,255,0.6)",letterSpacing:".2em",textTransform:"uppercase",marginBottom:20}}>Proyecto S&M 2026</div>
+                <div style={{fontSize:52,fontWeight:900,letterSpacing:"-.04em",lineHeight:1.1,marginBottom:24}}>
+                  Bienvenido al<br/>
+                  <span style={{color:"#00C2FF",textShadow:"0 0 60px rgba(0,194,255,0.4)"}}>proyecto de sus sueños</span>
+                </div>
+                <div style={{fontSize:16,color:"rgba(100,150,200,0.45)",marginBottom:40,lineHeight:1.6}}>
+                  Water Drops Vitamínicos · Medellín · 2026
+                </div>
+                <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+                  <Pill primary onClick={()=>setView("dashboard")}>Ver Dashboard →</Pill>
+                  <Pill onClick={()=>{setActivePhase(PHASES[0]);setView("phase");setActiveTab("tareas");}}>Iniciar Fase 01</Pill>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* DASHBOARD */}
           {view==="dashboard"&&(
-            <div style={{padding:"26px 32px",maxWidth:860}}>
-              <div style={{position:"relative",marginBottom:22,padding:"24px",borderRadius:14,border:"1px solid rgba(0,194,255,0.09)",background:"rgba(8,13,24,0.8)",overflow:"hidden"}}>
-                <Bg/><div style={{position:"relative",zIndex:1}}>
-                  <div style={{fontSize:28,fontWeight:800,letterSpacing:"-.03em",marginBottom:4}}>Hola, <span style={{color:AU.color,textShadow:`0 0 20px ${AU.color}55`}}>{AU.label}.</span></div>
-                  <div style={{fontSize:12,color:"rgba(100,150,200,0.4)"}}>Water Drops · Medellín · 2026</div>
+            <div style={{padding:"28px 36px",maxWidth:1100}}>
+              <div style={{position:"relative",marginBottom:24,padding:"28px",borderRadius:16,border:"1px solid rgba(0,194,255,0.09)",background:"rgba(8,13,24,0.8)",overflow:"hidden"}}>
+                <AnimatedBg/>
+                <div style={{position:"relative",zIndex:1}}>
+                  <div style={{fontSize:32,fontWeight:800,letterSpacing:"-.03em",marginBottom:5}}>Hola, <span style={{color:AU.color,textShadow:`0 0 20px ${AU.color}55`}}>{AU.label}.</span></div>
+                  <div style={{fontSize:13,color:"rgba(100,150,200,0.4)"}}>Water Drops · Medellín · 2026</div>
                 </div>
               </div>
 
-              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:9,marginBottom:20}}>
-                {[{label:"Progreso total",val:`${globalPct}%`,color:"#00C2FF"},{label:"Tareas hechas",val:`${doneTasks}/${totalTasks}`,color:"#e8edf5"},{label:"Por Simón",val:simonDone,color:"#00C2FF"},{label:"Por Mariana",val:marianaDone,color:"#FF6EC7"},{label:"Decisiones",val:decisions.length,color:"#ffb800"}].map((m,i)=>(
-                  <div key={i} style={{background:"rgba(0,194,255,0.03)",border:"1px solid rgba(0,194,255,0.09)",borderRadius:10,padding:"12px 14px"}}>
-                    <div style={{fontSize:10,color:"rgba(100,150,200,0.4)",marginBottom:4}}>{m.label}</div>
-                    <div style={{fontSize:20,fontWeight:800,color:m.color}}>{m.val}</div>
-                  </div>
-                ))}
+              {/* Radial charts row */}
+              <div style={{display:"flex",gap:16,marginBottom:24,padding:"24px",background:"rgba(8,13,24,0.7)",borderRadius:14,border:"1px solid rgba(0,194,255,0.07)",alignItems:"center",flexWrap:"wrap"}}>
+                <RadialChart pct={globalPct} color="#00C2FF" size={90} label="Progreso total" value={`${globalPct}%`}/>
+                <div style={{width:1,height:70,background:"rgba(0,194,255,0.08)"}}/>
+                <RadialChart pct={totalTasks>0?Math.round((doneTasks/totalTasks)*100):0} color="#e8edf5" size={90} label="Tareas hechas" value={`${doneTasks}/${totalTasks}`}/>
+                <div style={{width:1,height:70,background:"rgba(0,194,255,0.08)"}}/>
+                <RadialChart pct={totalTasks>0?Math.round((simonDone/totalTasks)*100):0} color="#00C2FF" size={90} label="Por Simón" value={simonDone}/>
+                <div style={{width:1,height:70,background:"rgba(0,194,255,0.08)"}}/>
+                <RadialChart pct={totalTasks>0?Math.round((marianaDone/totalTasks)*100):0} color="#FF6EC7" size={90} label="Por Mariana" value={marianaDone}/>
+                <div style={{width:1,height:70,background:"rgba(0,194,255,0.08)"}}/>
+                <RadialChart pct={decisions.length>0?Math.min(decisions.length*10,100):0} color="#ffb800" size={90} label="Decisiones" value={decisions.length}/>
               </div>
 
-              <div style={{marginBottom:20,padding:"14px 16px",background:"rgba(8,13,24,0.7)",border:"1px solid rgba(0,194,255,0.07)",borderRadius:10}}>
-                <div style={{display:"flex",justifyContent:"space-between",marginBottom:7}}>
-                  <span style={{fontSize:11,color:"rgba(100,150,200,0.45)"}}>Progreso global</span>
-                  <span style={{fontSize:12,fontWeight:700,color:"#00C2FF"}}>{globalPct}%</span>
+              {/* Progress bar global */}
+              <div style={{marginBottom:24,padding:"18px 20px",background:"rgba(8,13,24,0.7)",border:"1px solid rgba(0,194,255,0.07)",borderRadius:12}}>
+                <div style={{display:"flex",justifyContent:"space-between",marginBottom:8}}>
+                  <span style={{fontSize:13,color:"rgba(100,150,200,0.45)"}}>Progreso global del proyecto</span>
+                  <span style={{fontSize:14,fontWeight:700,color:"#00C2FF"}}>{globalPct}%</span>
                 </div>
-                <div style={{height:7,background:"rgba(0,194,255,0.05)",borderRadius:4,overflow:"hidden",marginBottom:8}}>
-                  <div style={{width:`${globalPct}%`,height:"100%",background:"linear-gradient(90deg,#00C2FF,#FF6EC7)",borderRadius:4,transition:"width .5s"}}/>
+                <div style={{height:10,background:"rgba(0,194,255,0.05)",borderRadius:5,overflow:"hidden",marginBottom:8}}>
+                  <div style={{width:`${globalPct}%`,height:"100%",background:"linear-gradient(90deg,#00C2FF,#FF6EC7)",borderRadius:5,transition:"width .5s"}}/>
                 </div>
                 <div style={{display:"flex",gap:16}}>
-                  <div style={{display:"flex",alignItems:"center",gap:5}}><div style={{width:7,height:7,borderRadius:"50%",background:"#00C2FF"}}/><span style={{fontSize:10,color:"rgba(0,194,255,0.55)"}}>Simón: {simonDone}</span></div>
-                  <div style={{display:"flex",alignItems:"center",gap:5}}><div style={{width:7,height:7,borderRadius:"50%",background:"#FF6EC7"}}/><span style={{fontSize:10,color:"rgba(255,110,199,0.55)"}}>Mariana: {marianaDone}</span></div>
+                  <div style={{display:"flex",alignItems:"center",gap:5}}><div style={{width:8,height:8,borderRadius:"50%",background:"#00C2FF"}}/><span style={{fontSize:11,color:"rgba(0,194,255,0.55)"}}>Simón: {simonDone}</span></div>
+                  <div style={{display:"flex",alignItems:"center",gap:5}}><div style={{width:8,height:8,borderRadius:"50%",background:"#FF6EC7"}}/><span style={{fontSize:11,color:"rgba(255,110,199,0.55)"}}>Mariana: {marianaDone}</span></div>
                 </div>
               </div>
 
-              <div style={{fontSize:9,color:"rgba(0,194,255,0.28)",letterSpacing:".12em",textTransform:"uppercase",marginBottom:10}}>Fases del negocio</div>
-              <div style={{display:"flex",flexDirection:"column",gap:7}}>
+              {/* Phase bars */}
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:24}}>
                 {PHASES.map(ph=>{
                   const pd=ph.grupos.reduce((a,g)=>a+g.tareas.filter(t=>checks[t.id]).length,0);
                   const pt=ph.grupos.reduce((a,g)=>a+g.tareas.length,0);
@@ -393,22 +482,15 @@ export default function App(){
                   const ps=ph.grupos.reduce((a,g)=>a+g.tareas.filter(t=>checks[t.id]==="simon").length,0);
                   const pm=ph.grupos.reduce((a,g)=>a+g.tareas.filter(t=>checks[t.id]==="mariana").length,0);
                   return(
-                    <GlowCard key={ph.id} onClick={()=>{setActivePhase(ph);setView("phase");setActiveTab("tareas");}} style={{padding:"12px 16px"}}>
-                      <div style={{display:"flex",alignItems:"center",gap:12}}>
-                        <div style={{width:32,height:32,borderRadius:7,background:"rgba(0,194,255,0.06)",border:"1px solid rgba(0,194,255,0.16)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#00C2FF",flexShrink:0}}>{ph.num}</div>
-                        <div style={{flex:1,minWidth:0}}>
+                    <GlowCard key={ph.id} onClick={()=>{setActivePhase(ph);setView("phase");setActiveTab("tareas");}} style={{padding:"16px 18px"}}>
+                      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:10}}>
+                        <div style={{width:36,height:36,borderRadius:8,background:"rgba(0,194,255,0.06)",border:"1px solid rgba(0,194,255,0.16)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:700,color:"#00C2FF",flexShrink:0}}>{ph.num}</div>
+                        <div style={{flex:1}}>
                           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
-                            <span style={{fontSize:13,fontWeight:600,color:"#e8edf5"}}>{ph.label}</span>
-                            <span style={{fontSize:12,fontWeight:700,color:pct===100?"#00e88a":"#00C2FF"}}>{pct}%</span>
+                            <span style={{fontSize:14,fontWeight:600,color:"#e8edf5"}}>{ph.label}</span>
+                            <span style={{fontSize:13,fontWeight:700,color:pct===100?"#00e88a":"#00C2FF"}}>{pct}%</span>
                           </div>
-                          <div style={{height:3,background:"rgba(0,194,255,0.05)",borderRadius:2,overflow:"hidden",marginBottom:5}}>
-                            <div style={{width:`${pct}%`,height:"100%",background:pct===100?"#00e88a":"rgba(0,194,255,0.55)",borderRadius:2,transition:"width .4s"}}/>
-                          </div>
-                          <div style={{display:"flex",gap:10}}>
-                            {ps>0&&<div style={{display:"flex",alignItems:"center",gap:3}}><div style={{width:5,height:5,borderRadius:"50%",background:"#00C2FF"}}/><span style={{fontSize:9,color:"rgba(0,194,255,0.45)"}}>Simón: {ps}</span></div>}
-                            {pm>0&&<div style={{display:"flex",alignItems:"center",gap:3}}><div style={{width:5,height:5,borderRadius:"50%",background:"#FF6EC7"}}/><span style={{fontSize:9,color:"rgba(255,110,199,0.45)"}}>Mariana: {pm}</span></div>}
-                            {pd===0&&<span style={{fontSize:9,color:"rgba(100,150,200,0.28)"}}>Sin iniciar</span>}
-                          </div>
+                          <PhaseBar label="" pct={pct} simonN={ps} marianaN={pm}/>
                         </div>
                       </div>
                     </GlowCard>
@@ -420,88 +502,95 @@ export default function App(){
 
           {/* PHASE */}
           {view==="phase"&&activePhase&&(
-            <div style={{padding:"26px 32px",maxWidth:740}}>
-              <div style={{display:"flex",gap:7,marginBottom:18,flexWrap:"wrap",alignItems:"center"}}>
+            <div style={{padding:"28px 36px",maxWidth:900}}>
+              <div style={{display:"flex",gap:8,marginBottom:20,flexWrap:"wrap",alignItems:"center"}}>
                 <Pill small onClick={()=>setView("dashboard")}>← Volver</Pill>
-                {["tareas","proveedores",...(activePhase.ia.length>0?["ia"]:[])].map(tab=>(
+                {["tareas","proveedores"].map(tab=>(
                   <Pill key={tab} small onClick={()=>setActiveTab(tab)} primary={activeTab===tab}>
-                    {tab==="tareas"?"Tareas":tab==="proveedores"?"Proveedores":"IA para marca"}
+                    {tab==="tareas"?"Tareas":"Proveedores"}
                   </Pill>
                 ))}
               </div>
-              <div style={{marginBottom:18}}>
-                <div style={{fontSize:18,fontWeight:800,letterSpacing:"-.02em",marginBottom:3}}>{activePhase.num} · {activePhase.label}</div>
-                <div style={{fontSize:12,color:"rgba(100,150,200,0.4)",lineHeight:1.6}}>{activePhase.desc}</div>
+              <div style={{marginBottom:20}}>
+                <div style={{fontSize:22,fontWeight:800,letterSpacing:"-.02em",marginBottom:4}}>{activePhase.num} · {activePhase.label}</div>
+                <div style={{fontSize:13,color:"rgba(100,150,200,0.4)",lineHeight:1.6}}>{activePhase.desc}</div>
               </div>
 
-              {activeTab==="tareas"&&activePhase.grupos.map(g=>(
-                <div key={g.label} style={{marginBottom:20}}>
-                  <div style={{fontSize:9,color:"rgba(0,194,255,0.32)",letterSpacing:".12em",textTransform:"uppercase",marginBottom:7}}>{g.label}</div>
-                  {g.tareas.map(t=>{
-                    const who=checks[t.id];const done=!!who;const whoU=who?USERS[who]:null;
-                    const ts=TAG_STYLES[t.tag]||TAG_STYLES.info;const hasNote=notes[t.id]?.trim();
-                    return(
-                      <div key={t.id} style={{display:"flex",alignItems:"flex-start",gap:9,padding:"9px 12px",borderRadius:9,border:`1px solid ${done?`${whoU.colorBorder}40`:"rgba(0,194,255,0.07)"}`,background:done?whoU.colorBg.replace("0.12","0.03"):"rgba(8,13,24,0.6)",marginBottom:5,transition:"all .2s"}}>
-                        <div onClick={()=>toggleCheck(t.id)} style={{width:17,height:17,borderRadius:4,border:`1.5px solid ${done?whoU.color:"rgba(0,194,255,0.22)"}`,background:done?whoU.color:"transparent",flexShrink:0,marginTop:1,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",transition:"all .18s"}}>
-                          {done&&<div style={{width:8,height:4,borderLeft:"1.5px solid #04080f",borderBottom:"1.5px solid #04080f",transform:"rotate(-45deg) translateY(-1px)"}}/>}
-                        </div>
-                        <div style={{flex:1,minWidth:0}}>
-                          <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:7,flexWrap:"wrap"}}>
-                            <div style={{fontSize:13,color:done?"rgba(100,150,200,0.38)":"#e8edf5",textDecoration:done?"line-through":"none",lineHeight:1.4}}>{t.title}</div>
-                            <div style={{display:"flex",gap:4,flexShrink:0,alignItems:"center",flexWrap:"wrap"}}>
-                              {done&&whoU&&(
-                                <div style={{display:"flex",alignItems:"center",gap:3,padding:"1px 7px",borderRadius:999,background:whoU.colorBg,border:`1px solid ${whoU.colorBorder}`}}>
-                                  <div style={{width:4,height:4,borderRadius:"50%",background:whoU.color}}/>
-                                  <span style={{fontSize:9,color:whoU.color,fontWeight:600}}>{whoU.label}</span>
+              {activeTab==="tareas"&&(
+                <div style={{display:"flex",gap:20}}>
+                  {/* Tasks list */}
+                  <div style={{flex:1,minWidth:0}}>
+                    {activePhase.grupos.map(g=>(
+                      <div key={g.label} style={{marginBottom:22}}>
+                        <div style={{fontSize:10,color:"rgba(0,194,255,0.32)",letterSpacing:".12em",textTransform:"uppercase",marginBottom:9}}>{g.label}</div>
+                        {g.tareas.map(t=>{
+                          const who=checks[t.id];const done=!!who;const whoU=who?USERS[who]:null;
+                          const ts=TAG_STYLES[t.tag]||TAG_STYLES.info;const hasNote=notes[t.id]?.trim();
+                          return(
+                            <div key={t.id} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"11px 14px",borderRadius:10,border:`1px solid ${done?`${whoU.colorBorder}40`:"rgba(0,194,255,0.07)"}`,background:done?whoU.colorBg.replace("0.12","0.03"):"rgba(8,13,24,0.6)",marginBottom:6,transition:"all .2s"}}>
+                              <div onClick={()=>toggleCheck(t.id)} style={{width:20,height:20,borderRadius:5,border:`1.5px solid ${done?whoU.color:"rgba(0,194,255,0.22)"}`,background:done?whoU.color:"transparent",flexShrink:0,marginTop:1,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",transition:"all .18s"}}>
+                                {done&&<div style={{width:9,height:5,borderLeft:"1.5px solid #04080f",borderBottom:"1.5px solid #04080f",transform:"rotate(-45deg) translateY(-1px)"}}/>}
+                              </div>
+                              <div style={{flex:1,minWidth:0}}>
+                                <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:8,flexWrap:"wrap"}}>
+                                  <div style={{fontSize:14,color:done?"rgba(100,150,200,0.38)":"#e8edf5",textDecoration:done?"line-through":"none",lineHeight:1.4}}>{t.title}</div>
+                                  <div style={{display:"flex",gap:5,flexShrink:0,alignItems:"center",flexWrap:"wrap"}}>
+                                    {done&&whoU&&(
+                                      <div style={{display:"flex",alignItems:"center",gap:3,padding:"2px 8px",borderRadius:999,background:whoU.colorBg,border:`1px solid ${whoU.colorBorder}`}}>
+                                        <div style={{width:5,height:5,borderRadius:"50%",background:whoU.color}}/>
+                                        <span style={{fontSize:10,color:whoU.color,fontWeight:600}}>{whoU.label}</span>
+                                      </div>
+                                    )}
+                                    <span style={{fontSize:10,padding:"2px 8px",borderRadius:999,border:`1px solid ${ts.border}`,background:ts.bg,color:ts.color}}>{ts.label}</span>
+                                    <div onClick={()=>openNote(t.id,t.title)} style={{fontSize:11,padding:"3px 10px",borderRadius:999,border:`1px solid ${hasNote?"rgba(255,180,0,0.38)":"rgba(0,194,255,0.2)"}`,background:hasNote?"rgba(255,180,0,0.06)":"rgba(0,194,255,0.04)",color:hasNote?"#ffb800":"rgba(0,194,255,0.6)",cursor:"pointer",fontWeight:hasNote?600:400,whiteSpace:"nowrap"}}>
+                                      {hasNote?"📝 Info guardada":"+ Agregar información"}
+                                    </div>
+                                  </div>
                                 </div>
-                              )}
-                              <span style={{fontSize:9,padding:"1px 7px",borderRadius:999,border:`1px solid ${ts.border}`,background:ts.bg,color:ts.color}}>{ts.label}</span>
-                              <div onClick={()=>openNote(t.id,t.title)} style={{fontSize:9,padding:"1px 7px",borderRadius:999,border:`1px solid ${hasNote?"rgba(255,180,0,0.38)":"rgba(0,194,255,0.13)"}`,background:hasNote?"rgba(255,180,0,0.06)":"transparent",color:hasNote?"#ffb800":"rgba(0,194,255,0.35)",cursor:"pointer"}}>
-                                {hasNote?"📝 nota":"+ nota"}
+                                <div style={{fontSize:12,color:"rgba(100,150,200,0.35)",marginTop:3,lineHeight:1.5}}>{t.sub}</div>
+                                {hasNote&&<div style={{fontSize:12,color:"rgba(255,180,0,0.5)",marginTop:5,padding:"5px 9px",background:"rgba(255,180,0,0.03)",borderRadius:5,borderLeft:"2px solid rgba(255,180,0,0.2)",lineHeight:1.5}}>{notes[t.id].slice(0,150)}{notes[t.id].length>150?"…":""}</div>}
                               </div>
                             </div>
-                          </div>
-                          <div style={{fontSize:11,color:"rgba(100,150,200,0.35)",marginTop:2,lineHeight:1.5}}>{t.sub}</div>
-                          {hasNote&&<div style={{fontSize:11,color:"rgba(255,180,0,0.5)",marginTop:4,padding:"4px 8px",background:"rgba(255,180,0,0.03)",borderRadius:5,borderLeft:"2px solid rgba(255,180,0,0.2)",lineHeight:1.5}}>{notes[t.id].slice(0,130)}{notes[t.id].length>130?"…":""}</div>}
-                        </div>
+                          );
+                        })}
                       </div>
-                    );
-                  })}
-                </div>
-              ))}
-
-              {activeTab==="proveedores"&&(
-                <div>
-                  <div style={{fontSize:9,color:"rgba(0,194,255,0.28)",letterSpacing:".12em",textTransform:"uppercase",marginBottom:12}}>Proveedores y contactos reales en Colombia</div>
-                  {activePhase.proveedores.length===0
-                    ?<div style={{fontSize:13,color:"rgba(100,150,200,0.3)",padding:"14px 0"}}>Sin proveedores específicos. Consulta al Asesor IA.</div>
-                    :activePhase.proveedores.map((p,i)=>(
-                      <GlowCard key={i} hover={false} style={{padding:"12px 15px",marginBottom:7}}>
-                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:5}}>
-                          <div style={{fontSize:13,fontWeight:600,color:"#e8edf5"}}>{p.name}</div>
-                          <span style={{fontSize:9,padding:"2px 7px",border:"1px solid rgba(0,194,255,0.18)",color:"#00C2FF",borderRadius:999,whiteSpace:"nowrap"}}>{p.tipo}</span>
-                        </div>
-                        <div style={{fontSize:11,color:"rgba(0,194,255,0.5)",marginBottom:3}}>{p.contacto}</div>
-                        <div style={{fontSize:12,color:"rgba(100,150,200,0.42)",lineHeight:1.55}}>{p.nota}</div>
-                      </GlowCard>
-                    ))
-                  }
+                    ))}
+                  </div>
+                  {/* IA sidebar for Marca phase */}
+                  {activePhase.ia.length>0&&(
+                    <div style={{width:260,flexShrink:0}}>
+                      <div style={{fontSize:10,color:"rgba(0,194,255,0.32)",letterSpacing:".12em",textTransform:"uppercase",marginBottom:10}}>IA recomendada</div>
+                      {activePhase.ia.map((tool,i)=>(
+                        <GlowCard key={i} hover={false} style={{padding:"13px 14px",marginBottom:8}}>
+                          <div style={{display:"flex",justifyContent:"space-between",gap:8,marginBottom:4}}>
+                            <div style={{fontSize:13,fontWeight:600,color:"#e8edf5"}}>{tool.name}</div>
+                          </div>
+                          <div style={{fontSize:11,color:"rgba(100,150,200,0.42)",marginBottom:4,lineHeight:1.45}}>{tool.uso}</div>
+                          <div style={{fontSize:10,color:"rgba(91,224,255,0.6)",marginBottom:4}}>{tool.link}</div>
+                          <div style={{fontSize:10,color:"rgba(0,194,255,0.55)",fontStyle:"italic"}}>{tool.nivel}</div>
+                        </GlowCard>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
-              {activeTab==="ia"&&activePhase.ia.length>0&&(
+              {activeTab==="proveedores"&&(
                 <div>
-                  <div style={{fontSize:9,color:"rgba(0,194,255,0.28)",letterSpacing:".12em",textTransform:"uppercase",marginBottom:12}}>Herramientas de IA recomendadas</div>
-                  {activePhase.ia.map((tool,i)=>(
-                    <GlowCard key={i} hover={false} style={{padding:"12px 15px",marginBottom:7}}>
-                      <div style={{display:"flex",justifyContent:"space-between",gap:10,marginBottom:4}}>
-                        <div style={{fontSize:13,fontWeight:600,color:"#e8edf5"}}>{tool.name}</div>
-                        <span style={{fontSize:9,padding:"2px 7px",border:"1px solid rgba(91,224,255,0.22)",color:"#5BE0FF",borderRadius:999,whiteSpace:"nowrap"}}>{tool.nivel}</span>
-                      </div>
-                      <div style={{fontSize:12,color:"rgba(100,150,200,0.42)",marginBottom:3,lineHeight:1.5}}>{tool.uso}</div>
-                      <div style={{fontSize:11,color:"rgba(0,194,255,0.45)"}}>{tool.link}</div>
-                    </GlowCard>
-                  ))}
+                  <div style={{fontSize:10,color:"rgba(0,194,255,0.28)",letterSpacing:".12em",textTransform:"uppercase",marginBottom:14}}>Proveedores y contactos reales en Colombia</div>
+                  {activePhase.proveedores.length===0
+                    ?<div style={{fontSize:14,color:"rgba(100,150,200,0.3)",padding:"14px 0"}}>Sin proveedores específicos. Consulta al Asesor IA.</div>
+                    :activePhase.proveedores.map((p,i)=>(
+                      <GlowCard key={i} hover={false} style={{padding:"14px 16px",marginBottom:8}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10,marginBottom:5}}>
+                          <div style={{fontSize:14,fontWeight:600,color:"#e8edf5"}}>{p.name}</div>
+                          <span style={{fontSize:10,padding:"2px 8px",border:"1px solid rgba(0,194,255,0.18)",color:"#00C2FF",borderRadius:999,whiteSpace:"nowrap"}}>{p.tipo}</span>
+                        </div>
+                        <div style={{fontSize:12,color:"rgba(0,194,255,0.5)",marginBottom:3}}>{p.contacto}</div>
+                        <div style={{fontSize:13,color:"rgba(100,150,200,0.42)",lineHeight:1.55}}>{p.nota}</div>
+                      </GlowCard>
+                    ))
+                  }
                 </div>
               )}
             </div>
@@ -509,21 +598,21 @@ export default function App(){
 
           {/* BITÁCORA */}
           {view==="bitacora"&&(
-            <div style={{padding:"26px 32px",maxWidth:700}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}>
+            <div style={{padding:"28px 36px",maxWidth:740}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
                 <div>
-                  <div style={{fontSize:18,fontWeight:800,letterSpacing:"-.02em"}}>Bitácora de decisiones</div>
-                  <div style={{fontSize:11,color:"rgba(100,150,200,0.38)",marginTop:2}}>Registro permanente de decisiones del negocio</div>
+                  <div style={{fontSize:20,fontWeight:800,letterSpacing:"-.02em"}}>Bitácora de decisiones</div>
+                  <div style={{fontSize:12,color:"rgba(100,150,200,0.38)",marginTop:3}}>Registro permanente de decisiones del negocio</div>
                 </div>
                 <Pill primary small onClick={()=>setShowDecForm(true)}>+ Registrar</Pill>
               </div>
 
               {showDecForm&&(
-                <GlowCard hover={false} style={{padding:"18px",marginBottom:14,borderColor:"rgba(0,194,255,0.18)"}}>
-                  <div style={{fontSize:10,color:"rgba(0,194,255,0.45)",letterSpacing:".1em",textTransform:"uppercase",marginBottom:10}}>Nueva decisión — {AU.label}</div>
-                  <textarea value={decText} onChange={e=>setDecText(e.target.value)} placeholder="Describe la decisión tomada, por qué y qué implica…" rows={3} style={{...inp,resize:"vertical",marginBottom:9,lineHeight:1.6}}/>
-                  <div style={{display:"flex",gap:7,alignItems:"center",flexWrap:"wrap"}}>
-                    <select value={decTag} onChange={e=>setDecTag(e.target.value)} style={{...inp,width:"auto",fontSize:11,padding:"6px 10px"}}>
+                <GlowCard hover={false} style={{padding:"20px",marginBottom:16,borderColor:"rgba(0,194,255,0.18)"}}>
+                  <div style={{fontSize:11,color:"rgba(0,194,255,0.45)",letterSpacing:".1em",textTransform:"uppercase",marginBottom:12}}>Nueva decisión — {AU.label}</div>
+                  <textarea value={decText} onChange={e=>setDecText(e.target.value)} placeholder="Describe la decisión tomada, por qué y qué implica…" rows={3} style={{...inp,resize:"vertical",marginBottom:10,lineHeight:1.6}}/>
+                  <div style={{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}}>
+                    <select value={decTag} onChange={e=>setDecTag(e.target.value)} style={{...inp,width:"auto",fontSize:12,padding:"7px 12px"}}>
                       {["estrategia","producto","marca","ventas","financiero","equipo"].map(v=><option key={v} value={v}>{v}</option>)}
                     </select>
                     <Pill primary small onClick={addDecision}>Guardar</Pill>
@@ -533,27 +622,27 @@ export default function App(){
               )}
 
               {decisions.length===0&&!showDecForm&&(
-                <div style={{padding:"28px 0",textAlign:"center",color:"rgba(100,150,200,0.28)",fontSize:13}}>Aún no hay decisiones registradas.<br/><span style={{fontSize:11}}>Cada decisión importante del negocio queda aquí para siempre.</span></div>
+                <div style={{padding:"32px 0",textAlign:"center",color:"rgba(100,150,200,0.28)",fontSize:14}}>Aún no hay decisiones registradas.<br/><span style={{fontSize:12}}>Cada decisión importante del negocio queda aquí para siempre.</span></div>
               )}
 
               {decisions.map(d=>{
                 const du=USERS[d.author];
                 const tc={estrategia:"#00C2FF",producto:"#00e88a",marca:"#FF6EC7",ventas:"#ffb800",financiero:"#ff8080",equipo:"#5BE0FF"}[d.tag]||"#00C2FF";
                 return(
-                  <GlowCard key={d.id} hover={false} style={{padding:"13px 15px",marginBottom:7,borderColor:`${du.colorBorder}33`}}>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,marginBottom:7}}>
-                      <div style={{display:"flex",alignItems:"center",gap:7}}>
-                        <Av user={d.author} size={20}/>
-                        <span style={{fontSize:11,color:du.color,fontWeight:600}}>{du.label}</span>
-                        <span style={{fontSize:10,color:"rgba(100,150,200,0.3)"}}>· {d.date}</span>
+                  <GlowCard key={d.id} hover={false} style={{padding:"14px 16px",marginBottom:8,borderColor:`${du.colorBorder}33`}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8,marginBottom:8}}>
+                      <div style={{display:"flex",alignItems:"center",gap:8}}>
+                        <Av user={d.author} size={22}/>
+                        <span style={{fontSize:12,color:du.color,fontWeight:600}}>{du.label}</span>
+                        <span style={{fontSize:11,color:"rgba(100,150,200,0.3)"}}>· {d.date}</span>
                       </div>
                       <div style={{display:"flex",gap:5,alignItems:"center"}}>
-                        <span style={{fontSize:9,padding:"1px 7px",borderRadius:999,border:`1px solid ${tc}33`,color:tc,background:`${tc}0f`}}>{d.tag}</span>
-                        <div onClick={()=>delDecision(d.id)} style={{fontSize:9,color:"rgba(100,150,200,0.22)",cursor:"pointer",padding:"1px 5px",borderRadius:4,border:"1px solid rgba(255,80,80,0.1)"}}
+                        <span style={{fontSize:10,padding:"2px 8px",borderRadius:999,border:`1px solid ${tc}33`,color:tc,background:`${tc}0f`}}>{d.tag}</span>
+                        <div onClick={()=>delDecision(d.id)} style={{fontSize:10,color:"rgba(100,150,200,0.22)",cursor:"pointer",padding:"2px 6px",borderRadius:4,border:"1px solid rgba(255,80,80,0.1)"}}
                           onMouseEnter={e=>e.currentTarget.style.color="rgba(255,80,80,0.55)"} onMouseLeave={e=>e.currentTarget.style.color="rgba(100,150,200,0.22)"}>✕</div>
                       </div>
                     </div>
-                    <div style={{fontSize:13,color:"rgba(232,237,245,0.78)",lineHeight:1.65}}>{d.text}</div>
+                    <div style={{fontSize:14,color:"rgba(232,237,245,0.78)",lineHeight:1.65}}>{d.text}</div>
                   </GlowCard>
                 );
               })}
@@ -562,22 +651,22 @@ export default function App(){
 
           {/* CHAT */}
           {view==="chat"&&(
-            <div style={{display:"flex",flexDirection:"column",height:"calc(100vh - 50px)"}}>
-              <div style={{flex:1,overflowY:"auto",padding:"18px 32px",display:"flex",flexDirection:"column",gap:9}}>
+            <div style={{display:"flex",flexDirection:"column",height:"calc(100vh - 52px)"}}>
+              <div style={{flex:1,overflowY:"auto",padding:"20px 36px",display:"flex",flexDirection:"column",gap:10}}>
                 {chatMsgs.map((m,i)=>(
-                  <div key={i} style={{display:"flex",gap:7,alignItems:"flex-start",flexDirection:m.role==="user"?"row-reverse":"row"}}>
-                    <div style={{width:24,height:24,borderRadius:"50%",background:m.role==="user"?AU.colorBg:"rgba(0,194,255,0.05)",border:`1px solid ${m.role==="user"?AU.colorBorder:"rgba(0,194,255,0.18)"}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,fontWeight:700,color:m.role==="user"?AU.color:"#00C2FF",flexShrink:0,marginTop:2}}>
+                  <div key={i} style={{display:"flex",gap:8,alignItems:"flex-start",flexDirection:m.role==="user"?"row-reverse":"row"}}>
+                    <div style={{width:28,height:28,borderRadius:"50%",background:m.role==="user"?AU.colorBg:"rgba(0,194,255,0.05)",border:`1px solid ${m.role==="user"?AU.colorBorder:"rgba(0,194,255,0.18)"}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:m.role==="user"?AU.color:"#00C2FF",flexShrink:0,marginTop:2}}>
                       {m.role==="user"?AU.initial:"IA"}
                     </div>
-                    <div style={{maxWidth:"72%",padding:"8px 12px",borderRadius:10,background:m.role==="user"?"rgba(0,194,255,0.06)":"rgba(8,13,24,0.9)",border:`1px solid ${m.role==="user"?"rgba(0,194,255,0.16)":"rgba(0,194,255,0.07)"}`,fontSize:13,color:"rgba(232,237,245,0.8)",lineHeight:1.7,whiteSpace:"pre-wrap"}}>
+                    <div style={{maxWidth:"72%",padding:"10px 14px",borderRadius:12,background:m.role==="user"?"rgba(0,194,255,0.06)":"rgba(8,13,24,0.9)",border:`1px solid ${m.role==="user"?"rgba(0,194,255,0.16)":"rgba(0,194,255,0.07)"}`,fontSize:14,color:"rgba(232,237,245,0.8)",lineHeight:1.7,whiteSpace:"pre-wrap"}}>
                       {m.content.replace(/^\[.*?\]:\s*/,"")}
                     </div>
                   </div>
                 ))}
-                {chatLoading&&<div style={{display:"flex",gap:7,alignItems:"center"}}><div style={{width:24,height:24,borderRadius:"50%",background:"rgba(0,194,255,0.05)",border:"1px solid rgba(0,194,255,0.18)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,fontWeight:700,color:"#00C2FF"}}>IA</div><div style={{padding:"8px 12px",borderRadius:10,background:"rgba(8,13,24,0.9)",border:"1px solid rgba(0,194,255,0.07)",fontSize:13,color:"rgba(0,194,255,0.38)"}}>Pensando…</div></div>}
+                {chatLoading&&<div style={{display:"flex",gap:8,alignItems:"center"}}><div style={{width:28,height:28,borderRadius:"50%",background:"rgba(0,194,255,0.05)",border:"1px solid rgba(0,194,255,0.18)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:700,color:"#00C2FF"}}>IA</div><div style={{padding:"10px 14px",borderRadius:12,background:"rgba(8,13,24,0.9)",border:"1px solid rgba(0,194,255,0.07)",fontSize:14,color:"rgba(0,194,255,0.38)"}}>Pensando…</div></div>}
                 <div ref={chatEndRef}/>
               </div>
-              <div style={{padding:"12px 32px",borderTop:"1px solid rgba(0,194,255,0.07)",background:"rgba(4,8,15,0.96)",display:"flex",gap:9}}>
+              <div style={{padding:"14px 36px",borderTop:"1px solid rgba(0,194,255,0.07)",background:"rgba(4,8,15,0.96)",display:"flex",gap:10}}>
                 <input value={chatInput} onChange={e=>setChatInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&!e.shiftKey&&sendChat()} placeholder="Pregunta sobre fórmula, proveedores, ventas, estrategia…" style={{...inp,flex:1}}/>
                 <Pill primary onClick={sendChat} disabled={!chatInput.trim()||chatLoading}>Enviar →</Pill>
               </div>
@@ -590,12 +679,12 @@ export default function App(){
       {/* NOTE MODAL */}
       {editNote&&(
         <div style={{position:"fixed",inset:0,background:"rgba(4,8,15,0.93)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:200}}>
-          <GlowCard hover={false} style={{padding:"28px",width:460,borderColor:"rgba(255,180,0,0.22)"}}>
-            <div style={{fontSize:9,color:"#ffb800",letterSpacing:".12em",textTransform:"uppercase",marginBottom:4}}>Nota</div>
-            <div style={{fontSize:13,fontWeight:700,marginBottom:14,color:"#e8edf5",lineHeight:1.4}}>{editNote.title}</div>
-            <textarea value={noteText} onChange={e=>setNoteText(e.target.value)} placeholder="Contactos, decisiones, links, información clave…" rows={5} style={{...inp,resize:"vertical",marginBottom:12,lineHeight:1.6}}/>
-            <div style={{display:"flex",gap:7}}>
-              <Pill primary onClick={saveNote}>Guardar</Pill>
+          <GlowCard hover={false} style={{padding:"32px",width:500,borderColor:"rgba(255,180,0,0.22)"}}>
+            <div style={{fontSize:10,color:"#ffb800",letterSpacing:".12em",textTransform:"uppercase",marginBottom:5}}>Información de tarea</div>
+            <div style={{fontSize:15,fontWeight:700,marginBottom:16,color:"#e8edf5",lineHeight:1.4}}>{editNote.title}</div>
+            <textarea value={noteText} onChange={e=>setNoteText(e.target.value)} placeholder="Contactos, decisiones, links, información clave, avances…" rows={6} style={{...inp,resize:"vertical",marginBottom:14,lineHeight:1.6}}/>
+            <div style={{display:"flex",gap:8}}>
+              <Pill primary onClick={saveNote}>Guardar información</Pill>
               <Pill onClick={()=>setEditNote(null)}>Cancelar</Pill>
             </div>
           </GlowCard>
