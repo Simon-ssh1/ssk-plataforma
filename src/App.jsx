@@ -195,18 +195,55 @@ function Av({user,size=28}){
 }
 
 function AnimatedBg({full=false}){
-  return(
-    <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:0}} viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <radialGradient id="rg1" cx="20%" cy="30%" r="55%"><stop offset="0%" stopColor="#00C2FF" stopOpacity="0.12"/><stop offset="100%" stopColor="#04080f" stopOpacity="0"/></radialGradient>
-        <radialGradient id="rg2" cx="80%" cy="70%" r="50%"><stop offset="0%" stopColor="#00C2FF" stopOpacity="0.07"/><stop offset="100%" stopColor="#04080f" stopOpacity="0"/></radialGradient>
-      </defs>
-      <rect width="1200" height="800" fill="url(#rg1)"/><rect width="1200" height="800" fill="url(#rg2)"/>
-      {full&&<>{[{cx:200,cy:150,r:1.5,dur:"3s"},{cx:400,cy:80,r:1,dur:"4s"},{cx:700,cy:200,r:2,dur:"2.5s"},{cx:900,cy:120,r:1.5,dur:"3.5s"},{cx:1100,cy:300,r:1,dur:"5s"},{cx:150,cy:400,r:1.5,dur:"4s"},{cx:600,cy:500,r:1,dur:"3s"},{cx:1000,cy:600,r:2,dur:"4.5s"}].map((p,i)=>(
-        <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill="#00C2FF" opacity="0.4"><animate attributeName="opacity" values="0.1;0.8;0.1" dur={p.dur} repeatCount="indefinite"/></circle>
-      ))}</>}
-    </svg>
-  );
+  const canvasRef=useRef(null);
+  useEffect(()=>{
+    const canvas=canvasRef.current;
+    if(!canvas)return;
+    const ctx=canvas.getContext('2d');
+    let raf,W,H;
+    const particles=[];
+    const COLORS=['rgba(0,194,255,','rgba(0,100,180,','rgba(0,50,120,'];
+    function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight;}
+    function mkParticle(){
+      return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*1.8+.4,a:Math.random()*.6+.1,col:COLORS[Math.floor(Math.random()*COLORS.length)]};
+    }
+    resize();
+    if(full){for(let i=0;i<80;i++)particles.push(mkParticle());}
+    else{for(let i=0;i<30;i++)particles.push(mkParticle());}
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      // Deep background gradient
+      const g=ctx.createRadialGradient(W*.2,H*.3,0,W*.2,H*.3,W*.7);
+      g.addColorStop(0,'rgba(0,30,60,0.9)');g.addColorStop(1,'rgba(4,8,15,0)');
+      ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+      const g2=ctx.createRadialGradient(W*.8,H*.7,0,W*.8,H*.7,W*.6);
+      g2.addColorStop(0,'rgba(0,20,50,0.7)');g2.addColorStop(1,'rgba(4,8,15,0)');
+      ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+      // Draw connections
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<120){
+            ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+            ctx.strokeStyle=`rgba(0,194,255,${.08*(1-dist/120)})`;ctx.lineWidth=.5;ctx.stroke();
+          }
+        }
+      }
+      // Draw particles
+      particles.forEach(p=>{
+        p.x+=p.vx;p.y+=p.vy;
+        if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=p.col+p.a+')';ctx.fill();
+      });
+      raf=requestAnimationFrame(draw);
+    }
+    draw();
+    const ro=new ResizeObserver(resize);ro.observe(canvas);
+    return()=>{cancelAnimationFrame(raf);ro.disconnect();};
+  },[full]);
+  return <canvas ref={canvasRef} style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:0}}/>;
 }
 
 function RadialChart({pct,color,size=88,label,value}){
@@ -367,7 +404,7 @@ export default function App(){
         <GlowCard hover={false} style={{padding:"44px 38px",borderColor:"rgba(0,194,255,0.22)"}}>
           <div style={{textAlign:"center",marginBottom:32}}>
             <div style={{fontSize:12,color:"#00C2FF",letterSpacing:".15em",textTransform:"uppercase",marginBottom:12}}>Proyecto S&M 2026</div>
-            <div style={{fontSize:28,fontWeight:800,letterSpacing:"-.03em",lineHeight:1.2}}>Bienvenidos al<br/><span style={{color:"#00C2FF"}}>OS del negocio</span></div>
+            <div style={{fontSize:28,fontWeight:800,letterSpacing:"-.03em",lineHeight:1.2,color:"#e8edf5"}}>Bienvenidos al<br/><span style={{color:"#00C2FF"}}>OS del negocio</span></div>
             <div style={{fontSize:12,color:"rgba(100,150,200,0.3)",marginTop:8}}>Water Drops · Medellín</div>
           </div>
           <div style={{marginBottom:14}}>
